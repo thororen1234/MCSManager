@@ -79,11 +79,10 @@ export function parseForwardAddress(addr: string, require: "http" | "ws") {
   // Reassemble the address based on the separated port and ip
   const checkAddr = onlyAddr.toLocaleLowerCase();
   if (checkAddr.indexOf("localhost") === 0 || checkAddr.indexOf("127.0.0.") === 0) {
-    addr = `${protocol}${window.location.hostname}${daemonPort ? `:${daemonPort}` : ""}${
-      path ?? ""
-    }`;
+    addr = `${protocol}${window.location.hostname}${path ?? ""
+      }`;
   } else {
-    addr = `${protocol}${onlyAddr}${daemonPort ? `:${daemonPort}` : ""}${path ?? ""}`;
+    addr = `${protocol}${onlyAddr}${path ?? ""}`;
   }
   return addr;
 }
