@@ -8,7 +8,6 @@ import { GOLANG_ZIP_PATH, ZIP_TIMEOUT_SECONDS } from "../const";
 import { $t } from "../i18n";
 import logger from "../service/log";
 import {
-  check7zipStatus,
   getFileExtension,
   isMultiVolume,
   isZipFormat
@@ -70,16 +69,7 @@ export async function decompress(
     }
   };
 
-  if (!check7zipStatus()) {
-    try {
-      return await use7zip(zipPath, dest);
-    } catch (error) {
-      // if 7zip is not working, try to use unzip
-      return await tryUnzip();
-    }
-  } else {
-    return await tryUnzip();
-  }
+  return await use7zip(zipPath, dest);
 }
 
 /**
