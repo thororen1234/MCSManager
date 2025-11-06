@@ -1,10 +1,10 @@
-import { io, Socket, SocketOptions, ManagerOptions } from "socket.io-client";
-import { RemoteServiceConfig } from "./entity_interface";
+import { InstanceStreamListener, removeTrail } from "mcsmanager-common";
+import { io, ManagerOptions, Socket, SocketOptions } from "socket.io-client";
+import { $t, i18next } from "../i18n";
 import { logger } from "../service/log";
 import RemoteRequest from "../service/remote_command";
-import { InstanceStreamListener, removeTrail } from "mcsmanager-common";
 import { systemConfig } from "../setting";
-import { $t, i18next } from "../i18n";
+import { RemoteServiceConfig } from "./entity_interface";
 
 export default class RemoteService {
   public static readonly STATUS_OK = 200;
@@ -29,9 +29,9 @@ export default class RemoteService {
   public connect(connectOpts?: Partial<SocketOptions & ManagerOptions>) {
     if (connectOpts) this.config.connectOpts = connectOpts;
     // Start the formal connection to the remote Socket program
-    let addr = `ws://${this.config.ip}:${this.config.port}`;
+    let addr = `ws://${this.config.ip}`;
     if (this.config.ip.indexOf("wss://") === 0 || this.config.ip.indexOf("ws://") === 0) {
-      addr = `${this.config.ip}:${this.config.port}`;
+      addr = `${this.config.ip}`;
     }
     if (systemConfig?.ssl) {
       addr = addr.replace("ws://", "wss://");
@@ -74,8 +74,7 @@ export default class RemoteService {
   public async setLanguage(language?: string) {
     if (!language) language = i18next.language;
     logger.info(
-      `${$t("TXT_CODE_daemonInfo.setLanguage")} (${this.config.ip}:${this.config.port}/${
-        this.config.remarks
+      `${$t("TXT_CODE_daemonInfo.setLanguage")} (${this.config.ip}/${this.config.remarks
       }) language: ${language}`
     );
     return await new RemoteRequest(this).request("info/setting", {

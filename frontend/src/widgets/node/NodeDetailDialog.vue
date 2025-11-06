@@ -17,7 +17,6 @@ const daemonInfo = ref<ComputedNodeInfo | null>(null);
 
 const DEFAULT_CONFIG = {
   ip: "",
-  port: 24444,
   prefix: "",
   remarks: "Unnamed Node",
   apiKey: "",
@@ -93,7 +92,6 @@ const openDialog = (data?: ComputedNodeInfo, uuid?: string) => {
     dialog.data = {
       ...data,
       ...data.config,
-      port: 24444, // connection port
       apiKey: "",
       remoteMappings: data.remoteMappings ?? [],
     };
