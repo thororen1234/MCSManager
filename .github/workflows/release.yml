@@ -54,9 +54,15 @@ jobs:
           mv dist_windows/ mcsmanager/
           zip -r mcsmanager_windows_release.zip mcsmanager/
 
+      - name: Update setup.sh download URL
+        run: |
+          TAG=${GITHUB_REF#refs/tags/}
+          sed -i "s|mcsmanager_download_addr=.*|mcsmanager_download_addr=\"https://github.com/thororen1234/MCSManager/releases/download/$TAG/mcsmanager_linux_release.tar.gz\"|" setup.sh
+
       - name: Upload assets to release
         uses: softprops/action-gh-release@v2
         with:
           files: |
             mcsmanager_windows_release.zip
             mcsmanager_linux_release.tar.gz
+            setup.sh
