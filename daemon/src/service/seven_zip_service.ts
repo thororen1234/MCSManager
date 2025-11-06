@@ -1,9 +1,7 @@
 import { exec } from "child_process";
 import { existsSync } from "fs";
-import fs from "fs/promises";
 import path from "path";
 import { promisify } from "util";
-import { SEVEN_ZIP_PATH } from "../const";
 import { $t } from "../i18n";
 import logger from "./log";
 
@@ -70,13 +68,7 @@ let isChecked7zip = false;
 export async function check7zipStatus(): Promise<boolean> {
   try {
     if (isChecked7zip) return true;
-    if (!existsSync(SEVEN_ZIP_PATH)) return false;
-    try {
-      await fs.chmod(SEVEN_ZIP_PATH, 0o755);
-    } catch (chmodError: any) {
-      logger.warn($t("TXT_CODE_9ade0fb8", { message: chmodError.message }));
-    }
-    const { stdout } = await execPromise(`"${SEVEN_ZIP_PATH}" i`, {
+    const { stdout } = await execPromise(`7z i`, {
       timeout: 5 * 1000
     });
     if (stdout.includes("7-Zip") && stdout.includes("Copyright")) {

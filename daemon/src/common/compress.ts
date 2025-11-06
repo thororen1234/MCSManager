@@ -4,7 +4,7 @@ import { t } from "i18next";
 import { ProcessWrapper } from "mcsmanager-common";
 import path from "path";
 import { promisify } from "util";
-import { GOLANG_ZIP_PATH, SEVEN_ZIP_PATH, ZIP_TIMEOUT_SECONDS } from "../const";
+import { GOLANG_ZIP_PATH, ZIP_TIMEOUT_SECONDS } from "../const";
 import { $t } from "../i18n";
 import logger from "../service/log";
 import {
@@ -95,7 +95,7 @@ async function use7zip(sourceZip: string, destDir: string): Promise<boolean> {
     let workingDir: string;
 
     await fs.ensureDir(destDir);
-    command = `"${SEVEN_ZIP_PATH}" x "${sourceZip}" "-o${destDir}" -aoa`;
+    command = `7z x "${sourceZip}" "-o${destDir}" -aoa`;
     workingDir = sourceDir;
     logger.info($t("TXT_CODE_35d2ee7a", { command }));
 
