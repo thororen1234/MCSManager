@@ -27,7 +27,6 @@ const DEFAULT_CONFIG = {
   portRangeStart: 0,
   portRangeEnd: 0,
   portAssignInterval: 0,
-  daemonPort: 24444,
   remoteMappings: [] as IPanelOverviewRemoteMappingResponse[],
 };
 
@@ -95,7 +94,6 @@ const openDialog = (data?: ComputedNodeInfo, uuid?: string) => {
       ...data,
       ...data.config,
       port: data.port, // connection port
-      daemonPort: data.config.port, // listen port
       apiKey: "",
       remoteMappings: data.remoteMappings ?? [],
     };
@@ -264,14 +262,6 @@ defineExpose({ openDialog });
               </a-form-item>
             </a-col>
           </a-row>
-          <a-form-item :label="t('TXT_CODE_cd1f9ef7')" name="daemonPort">
-            <a-typography-paragraph>
-              <a-typography-text type="secondary">
-                {{ t("TXT_CODE_75ef0619") }}
-              </a-typography-text>
-            </a-typography-paragraph>
-            <a-input v-model:value="dialog.data.daemonPort" />
-          </a-form-item>
           <a-form-item :label="t('TXT_CODE_bbe23ee7')" name="remoteMappings">
             <a-typography-paragraph>
               <a-typography-text type="secondary">

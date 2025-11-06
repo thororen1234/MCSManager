@@ -145,7 +145,6 @@ router.put(
     if (daemonSetting && daemon?.available) {
       await new RemoteRequest(daemon).request("info/setting", {
         ...daemonSetting,
-        port: parameter.daemonPort
       });
     }
 
