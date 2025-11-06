@@ -17,7 +17,6 @@ const daemonInfo = ref<ComputedNodeInfo | null>(null);
 
 const DEFAULT_CONFIG = {
   ip: "",
-  port: 24444,
   prefix: "",
   remarks: "Unnamed Node",
   apiKey: "",
@@ -27,7 +26,6 @@ const DEFAULT_CONFIG = {
   portRangeStart: 0,
   portRangeEnd: 0,
   portAssignInterval: 0,
-  daemonPort: 24444,
   remoteMappings: [] as IPanelOverviewRemoteMappingResponse[],
 };
 
@@ -94,8 +92,6 @@ const openDialog = (data?: ComputedNodeInfo, uuid?: string) => {
     dialog.data = {
       ...data,
       ...data.config,
-      port: data.port, // connection port
-      daemonPort: data.config.port, // listen port
       apiKey: "",
       remoteMappings: data.remoteMappings ?? [],
     };
@@ -187,15 +183,6 @@ defineExpose({ openDialog });
             </a-typography-text>
           </a-form-item>
 
-          <a-form-item :label="t('TXT_CODE_4a6bf8c6')" name="port" required>
-            <a-typography-paragraph>
-              <a-typography-text type="secondary">
-                {{ t("TXT_CODE_df455795") }}
-              </a-typography-text>
-            </a-typography-paragraph>
-            <a-input v-model:value="dialog.data.port" />
-          </a-form-item>
-
           <a-form-item :label="t('TXT_CODE_300c2ff4')" name="apiKey" :required="!editMode">
             <a-typography-paragraph>
               <a-typography-text type="secondary">
@@ -264,14 +251,6 @@ defineExpose({ openDialog });
               </a-form-item>
             </a-col>
           </a-row>
-          <a-form-item :label="t('TXT_CODE_cd1f9ef7')" name="daemonPort">
-            <a-typography-paragraph>
-              <a-typography-text type="secondary">
-                {{ t("TXT_CODE_75ef0619") }}
-              </a-typography-text>
-            </a-typography-paragraph>
-            <a-input v-model:value="dialog.data.daemonPort" />
-          </a-form-item>
           <a-form-item :label="t('TXT_CODE_bbe23ee7')" name="remoteMappings">
             <a-typography-paragraph>
               <a-typography-text type="secondary">

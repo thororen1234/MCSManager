@@ -40,7 +40,6 @@ class RemoteServiceSubsystem extends UniversalRemoteSubsystem<RemoteService> {
   // Like: this.registerRemoteService({
   // ip: "127.0.0.1",
   // apiKey: "test_key",
-  // port: 24444
   // });
   async registerRemoteService(config: IRemoteService) {
     const instance = await this.newInstance(config);
@@ -77,7 +76,6 @@ class RemoteServiceSubsystem extends UniversalRemoteSubsystem<RemoteService> {
     if (!instance) return;
     if (config.remarks) instance.config.remarks = config.remarks;
     if (config.ip) instance.config.ip = config.ip;
-    if (config.port) instance.config.port = config.port;
     if (config.prefix != null) instance.config.prefix = config.prefix;
     if (config.apiKey) instance.config.apiKey = config.apiKey;
     if (config.remoteMappings != null) instance.config.remoteMappings = config.remoteMappings;
@@ -100,11 +98,9 @@ class RemoteServiceSubsystem extends UniversalRemoteSubsystem<RemoteService> {
         fs.readFileSync(localKeyFilePath, { encoding: "utf-8" })
       );
       const localKey = localDaemonConfig.key;
-      const localPort = localDaemonConfig.port;
-      return await this.registerRemoteService({ apiKey: localKey, port: localPort, ip });
+      return await this.registerRemoteService({ apiKey: localKey, ip });
     } else if (key) {
-      const port = 24444;
-      return await this.registerRemoteService({ apiKey: key, port, ip });
+      return await this.registerRemoteService({ apiKey: key, ip });
     }
     logger.warn($t("TXT_CODE_systemRemoteService.error"));
 
@@ -129,7 +125,7 @@ class RemoteServiceSubsystem extends UniversalRemoteSubsystem<RemoteService> {
     this.services?.forEach((v) => {
       if (v && v.available === false) {
         logger.warn(
-          `Daemon exception detected: ${v.config.remarks} ${v.config.ip}:${v.config.port}, reconnecting...`
+          `Daemon exception detected: ${v.config.remarks} ${v.config.ip}, reconnecting...`
         );
         return v.connect();
       }
