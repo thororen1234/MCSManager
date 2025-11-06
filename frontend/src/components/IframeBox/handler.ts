@@ -93,7 +93,7 @@ export const iframeRouters: Record<string, IframeRouterHandler<any>> = {
     const daemonList = await fetchRemoteAppDaemons(true);
     return daemonList.remote.map((v) => {
       return {
-        nickname: v.remarks || `Daemon: ${v.ip}`,
+        nickname: v.remarks || `Daemon: ${v.ip}:${v.port}`,
         panelKey: apiKey,
         daemonId: v.uuid,
         nodeId: null,

@@ -60,9 +60,13 @@ export function parseForwardAddress(addr: string, require: "http" | "ws") {
   addr = deleteWebsocketHeader(deleteHttpHeader(addr));
 
   // port and ip are separated
+  let daemonPort = null;
   let onlyAddr = null;
   if (addr.split(":").length === 2) {
     onlyAddr = addr.split(":")[0];
+    daemonPort = parseInt(addr.split(":")[1].split("/")[0]);
+    if (isNaN(daemonPort))
+      throw new Error(`The address ${addr} failed to resolve, the port is incorrect`);
   } else {
     onlyAddr = addr;
   }
