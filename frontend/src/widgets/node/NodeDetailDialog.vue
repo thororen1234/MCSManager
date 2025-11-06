@@ -93,7 +93,7 @@ const openDialog = (data?: ComputedNodeInfo, uuid?: string) => {
     dialog.data = {
       ...data,
       ...data.config,
-      port: data.port, // connection port
+      port: 24444, // connection port
       apiKey: "",
       remoteMappings: data.remoteMappings ?? [],
     };
@@ -183,15 +183,6 @@ defineExpose({ openDialog });
             <a-typography-text type="secondary" v-if="ipNeedsMapping(dialog.data.ip)">
               {{ t("TXT_CODE_93c3cb78") }}
             </a-typography-text>
-          </a-form-item>
-
-          <a-form-item :label="t('TXT_CODE_4a6bf8c6')" name="port" required>
-            <a-typography-paragraph>
-              <a-typography-text type="secondary">
-                {{ t("TXT_CODE_df455795") }}
-              </a-typography-text>
-            </a-typography-paragraph>
-            <a-input v-model:value="dialog.data.port" />
           </a-form-item>
 
           <a-form-item :label="t('TXT_CODE_300c2ff4')" name="apiKey" :required="!editMode">
