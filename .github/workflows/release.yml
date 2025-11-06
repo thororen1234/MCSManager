@@ -56,7 +56,8 @@ jobs:
 
       - name: Update setup.sh download URL
         run: |
-          TAG=${GITHUB_REF#refs/tags/}
+          git fetch --tags
+          TAG=$(git tag | sort --version-sort | tail -n1)
           sed -i "s|mcsmanager_download_addr=.*|mcsmanager_download_addr=\"https://github.com/thororen1234/MCSManager/releases/download/$TAG/mcsmanager_linux_release.tar.gz\"|" setup.sh
 
       - name: Upload assets to release
